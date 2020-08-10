@@ -45,4 +45,16 @@ public class UsuarioServices {
         }
         return false;
     }
+
+    //VERIFY USER
+    public Usuario isRegistered(String username, String password){
+        for (Usuario user : allUsuarios()){
+            if(user.getUsername().equals(username)){
+                if(user.getPassword().equals(password)) {
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
 }

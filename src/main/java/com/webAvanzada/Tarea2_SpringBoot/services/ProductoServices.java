@@ -10,12 +10,20 @@ import java.util.List;
 
 @Service
 public class ProductoServices {
+
     @Autowired
     ProductoRepository productoRepository;
 
     //CREATE AND UPDATE
     public void createOrUpdateProducto(Producto producto){
         productoRepository.save(producto);
+    }
+
+    //GET ALL PRODUCTOS DISPONIBLES
+    public List<Producto> allProductosDisponibles(){
+        List<Producto> productoList = new ArrayList<Producto>();
+        productoRepository.getAllProductosDisponibles().forEach(producto -> productoList.add(producto));
+        return productoList;
     }
 
     //GET ALL PRODUCTOS

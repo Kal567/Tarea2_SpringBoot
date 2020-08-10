@@ -1,31 +1,37 @@
 package com.webAvanzada.Tarea2_SpringBoot.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.sql.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 public class Factura {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int idFactura;
 
-    private List<Alquiler> productos;
-    private Date fechaFacturacion;
-    private Usuario usuario;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaFacturacion;
+
+    private int idUsuario;
+
+    private int idAlquilerFacturado;
     private double totalAlquiler;
 
     public Factura(){
         super();
     }
 
-    public Factura(List<Alquiler> productos, Date fechaFacturacion, Usuario usuario, double totalAlquiler) {
-        this.productos = productos;
-        this.fechaFacturacion = fechaFacturacion;
-        this.usuario = usuario;
+    public Factura(/*LocalDate now,*/ int usuario, double totalAlquiler, int idAlquilerFacturado) {
+        //this.productosAlquilados = productosAlquilados;
+        this.fechaFacturacion = LocalDate.now();
+        this.idUsuario = usuario;
         this.totalAlquiler = totalAlquiler;
+        this.idAlquilerFacturado = idAlquilerFacturado;
     }
 
     public int getIdFactura() {
@@ -36,28 +42,41 @@ public class Factura {
         this.idFactura = idFactura;
     }
 
-    public List<Alquiler> getProductos() {
-        return productos;
+    public int getIdAlquilerFacturado() {
+        return idAlquilerFacturado;
     }
 
-    public void setProductos(List<Alquiler> productos) {
-        this.productos = productos;
+    public void setIdAlquilerFacturado(int idAlquilerFacturado) {
+        this.idAlquilerFacturado = idAlquilerFacturado;
     }
 
-    public Date getFechaFacturacion() {
+    /*
+        public List<Alquiler> getProductosAlquilados() {
+            return productosAlquilados;
+        }
+
+        public void setProductosAlquilados(List<Alquiler> productosAlquilados) {
+            this.productosAlquilados = productosAlquilados;
+        }
+
+        public void addProductosAlquilados(Alquiler productosAlquilados){
+            this.productosAlquilados.add(productosAlquilados);
+        }
+    */
+    public LocalDate getFechaFacturacion() {
         return fechaFacturacion;
     }
 
-    public void setFechaFacturacion(Date fechaFacturacion) {
+    public void setFechaFacturacion(LocalDate fechaFacturacion) {
         this.fechaFacturacion = fechaFacturacion;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public double getTotalAlquiler() {
@@ -67,4 +86,5 @@ public class Factura {
     public void setTotalAlquiler(double totalAlquiler) {
         this.totalAlquiler = totalAlquiler;
     }
+
 }

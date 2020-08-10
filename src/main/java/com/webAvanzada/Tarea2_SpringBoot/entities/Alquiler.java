@@ -1,34 +1,64 @@
 package com.webAvanzada.Tarea2_SpringBoot.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.sun.istack.Nullable;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Alquiler {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int idAlquiler;
 
-    private Producto producto;
-    private Usuario cliente;
-    private Date fechaAlquiler;
-    private Date fechaEntrega;
+    private int idProductoAlquiler;
+    private String nombreProductoAlquiler;
+
+    //@OneToOne
+    private int idUsuarioAlquiler;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaAlquiler;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaEntregaEstablecida;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaRealEntregado;
+
+    private int diasAlquilado;
     private boolean Entregado;
+    private double precioProducto;
     private double precioPorDias;
+
+    private int idFactura;
 
     public Alquiler(){
         super();
     }
 
-    public Alquiler(Producto producto, Usuario cliente, Date fechaAlquiler, Date fechaEntrega, boolean entregado, double precioPorDias) {
-        this.producto = producto;
-        this.cliente = cliente;
+    public Alquiler(int idProductoAlquiler, String nombreProductoAlquiler,
+                    int idUsuarioAlquiler, LocalDate fechaAlquiler,
+                    LocalDate fechaEntregaEstablecida, LocalDate fechaRealEntregado,
+                    int diasAlquilado, boolean entregado, double precioProducto,
+                    double precioPorDias, int idFactura) {
+        this.idProductoAlquiler = idProductoAlquiler;
+        this.nombreProductoAlquiler = nombreProductoAlquiler;
+        this.idUsuarioAlquiler = idUsuarioAlquiler;
         this.fechaAlquiler = fechaAlquiler;
-        this.fechaEntrega = fechaEntrega;
-        Entregado = entregado;
+        this.fechaEntregaEstablecida = fechaEntregaEstablecida;
+        this.fechaRealEntregado = fechaRealEntregado;
+        this.diasAlquilado = diasAlquilado;
+        this.Entregado = entregado;
+        this.precioProducto = precioProducto;
         this.precioPorDias = precioPorDias;
+        this.idFactura = idFactura;
+    }
+
+    public Alquiler(int idProducto, int idUser, Date fechaAlquiler, Date fechaEntregaEstablecida, Date fechaRealEntregado, int diasAlquilado, boolean entregado, double precio, double precioPorDias, Integer integer) {
     }
 
     public int getIdAlquiler() {
@@ -39,36 +69,60 @@ public class Alquiler {
         this.idAlquiler = idAlquiler;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public String getNombreProductoAlquiler() {
+        return nombreProductoAlquiler;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setNombreProductoAlquiler(String nombreProductoAlquiler) {
+        this.nombreProductoAlquiler = nombreProductoAlquiler;
     }
 
-    public Usuario getCliente() {
-        return cliente;
+    public int getIdProductoAlquiler() {
+        return idProductoAlquiler;
     }
 
-    public void setCliente(Usuario cliente) {
-        this.cliente = cliente;
+    public void setIdProductoAlquiler(int idProductoAlquiler) {
+        this.idProductoAlquiler = idProductoAlquiler;
     }
 
-    public Date getFechaAlquiler() {
+    public int getIdUsuarioAlquiler() {
+        return idUsuarioAlquiler;
+    }
+
+    public void setIdUsuarioAlquiler(int idUsuarioAlquiler) {
+        this.idUsuarioAlquiler = idUsuarioAlquiler;
+    }
+
+    public LocalDate getFechaAlquiler() {
         return fechaAlquiler;
     }
 
-    public void setFechaAlquiler(Date fechaAlquiler) {
+    public void setFechaAlquiler(LocalDate fechaAlquiler) {
         this.fechaAlquiler = fechaAlquiler;
     }
 
-    public Date getFechaEntrega() {
-        return fechaEntrega;
+    public LocalDate getFechaEntregaEstablecida() {
+        return fechaEntregaEstablecida;
     }
 
-    public void setFechaEntrega(Date fechaEntrega) {
-        this.fechaEntrega = fechaEntrega;
+    public void setFechaEntregaEstablecida(LocalDate fechaEntregaEstablecida) {
+        this.fechaEntregaEstablecida = fechaEntregaEstablecida;
+    }
+
+    public LocalDate getFechaRealEntregado() {
+        return fechaRealEntregado;
+    }
+
+    public void setFechaRealEntregado(LocalDate fechaRealEntregado) {
+        this.fechaRealEntregado = fechaRealEntregado;
+    }
+
+    public int getDiasAlquilado() {
+        return diasAlquilado;
+    }
+
+    public void setDiasAlquilado(int diasAlquilado) {
+        this.diasAlquilado = diasAlquilado;
     }
 
     public boolean isEntregado() {
@@ -79,11 +133,27 @@ public class Alquiler {
         Entregado = entregado;
     }
 
+    public double getPrecioProducto() {
+        return precioProducto;
+    }
+
+    public void setPrecioProducto(double precioProducto) {
+        this.precioProducto = precioProducto;
+    }
+
     public double getPrecioPorDias() {
         return precioPorDias;
     }
 
     public void setPrecioPorDias(double precioPorDias) {
         this.precioPorDias = precioPorDias;
+    }
+
+    public int getIdFactura() {
+        return idFactura;
+    }
+
+    public void setIdFactura(int idFactura) {
+        this.idFactura = idFactura;
     }
 }

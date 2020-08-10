@@ -1,29 +1,46 @@
 package com.webAvanzada.Tarea2_SpringBoot.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Usuario {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int idUsuario;
 
     private String nombreUsuario;
     private String apellidoUsuario;
+
+    @NotNull
+    @Column(unique = true)
+    private String username;
+
+    @NotNull
+    private String password;
     private String cedulaUsuario;
-    private boolean esAdmin;
+
+    private boolean enabled;
+
+    private String rol;
 
     public Usuario(){
         super();
     }
 
-    public Usuario(String nombreUsuario, String apellidoUsuario, String cedulaUsuario, boolean esAdmin) {
+    public Usuario(String nombreUsuario, String apellidoUsuario, String username, String password,
+                   String cedulaUsuario/*, byte[] imgUsuario*/, boolean enabled) {
         this.nombreUsuario = nombreUsuario;
         this.apellidoUsuario = apellidoUsuario;
+        this.username = username;
+        this.password = password;
         this.cedulaUsuario = cedulaUsuario;
-        this.esAdmin = esAdmin;
+        //this.imgUsuario = imgUsuario;
+        this.enabled = enabled;
     }
 
     public int getIdUsuario() {
@@ -50,6 +67,22 @@ public class Usuario {
         this.apellidoUsuario = apellidoUsuario;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getCedulaUsuario() {
         return cedulaUsuario;
     }
@@ -58,11 +91,27 @@ public class Usuario {
         this.cedulaUsuario = cedulaUsuario;
     }
 
-    public boolean isEsAdmin() {
-        return esAdmin;
+    /*public byte[] getImgUsuario() {
+        return imgUsuario;
     }
 
-    public void setEsAdmin(boolean esAdmin) {
-        this.esAdmin = esAdmin;
+    public void setImgUsuario(byte[] imgUsuario) {
+        this.imgUsuario = imgUsuario;
+    }*/
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

@@ -45,4 +45,15 @@ public class FacturaServices {
         }
         return false;
     }
+
+    //LIST ALL FACTURAS OF ONE CLIENT
+    public List<Factura> allFacturaByCliente(int idCliente){
+        List<Factura> facturaList = new ArrayList<Factura>();
+        for (Factura factura : allFacturas()){
+            if(factura.getIdUsuario() == idCliente){
+                facturaList.add(factura);
+            }
+        }
+        return facturaList;
+    }
 }
