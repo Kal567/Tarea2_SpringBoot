@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>PUCMyMarket</title>
+</head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">PUCMyMarket</a>
+</nav>
+
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+
+<form th:if="${getUsuario != null}" style="margin:25%; margin-top:5%" th:action="@{|/manageusuarios/${usuario}/updateUsuario/${getUsuario.idUsuario}|}" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <input type="number" class="form-control" id="idUsuario"name="idUsuario" th:value="${getUsuario.idUsuario}"  readonly>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="nombreUsuario">Nombre</label>
+            <input type="text" class="form-control" id="nombreUsuario0" placeholder="Luther" name="nombreUsuario" th:value="${getUsuario.nombreUsuario}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="apellidoUsuario">Apellido</label>
+            <input type="text" class="form-control" id="apellidoUsuario0" placeholder="Vandross" name="apellidoUsuario" th:value="${getUsuario.apellidoUsuario}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username0" placeholder="LVandross51" name="username" th:value="${getUsuario.username}">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password0" placeholder="Password" name="password" th:value="${getUsuario.password}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="cedula">Cédula</label>
+        <input type="text" class="form-control" id="cedula0" placeholder="402-334-0010" name="cedulaUsuario" th:value="${getUsuario.cedulaUsuario}">
+    </div>
+    <button type="submit" class="btn btn-primary">Editar</button>
+</form>
+
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+<!-- ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| -->
+
+<form th:if="${getUsuario == null}" style="margin:25%; margin-top:5%" enctype="multipart/form-data" action="/manageusuarios/newUsuario" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="nombreUsuario">Nombre</label>
+            <input type="text" class="form-control" id="nombreUsuario" placeholder="Luther" name="nombreUsuario">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="apellidoUsuario">Apellido</label>
+            <input type="text" class="form-control" id="apellidoUsuario" placeholder="Vandross" name="apellidoUsuario">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="username">Nombre de usuario</label>
+            <input type="text" class="form-control" id="username" placeholder="LVandross51" name="username">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="password">Contraseña</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="cedula">Cédula</label>
+        <input type="text" class="form-control" id="cedula" name="cedulaUsuario" placeholder="352-989-6452">
+    </div>
+    <!-- <div class="form-group">
+        <input class="btn btn-secondary" type="file" name="imageUsuario" id="imageUsuario"/>
+    </div> -->
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+</form>
+
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+</html>

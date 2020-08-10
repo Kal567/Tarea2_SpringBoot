@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráficos Historial</title>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script type="text/javascript"
+            src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{|/productos/${usuario}/disponibles|}">PUCMyMarket</a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{|/productos/${usuario}/disponibles|}">Productos<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{|/alquileres/${usuario}/alquileresList|}">Mis Alquiles</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{|/usuario/${usuario}/misFacturas|}">Mis Facturas</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Admin
+            </a>
+            <div th:if="${usuario != null}" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" th:href="@{|/manageusuarios/${usuario}/all|}">Usuarios</a>
+                <a class="dropdown-item" th:href="@{|/managefam/${usuario}/showAllFamilias|}">Familias</a>
+                <a class="dropdown-item" th:href="@{|/managefam/${usuario}/showAllSubFamilias|}">Sub-Familias</a>
+            </div>
+        </li>
+    </ul>
+    <button class="btn btn-outline-info my-2 my-sm-0"><a class="dropdown-item" th:href="@{|/manageusuarios/logout|}">Sign Out</a></button>
+</nav>
+<div align="center" style="width: 1000px;">
+        <h2>Historial Cliente</h2>
+        <div id="familia_chart"></div>
+        <div id="sub_familia_chart" style="width: 900px; height: 500px;"></div>
+    </div>
+    <script th:inline="javascript">
+        var familia_data = /*[[${chartDataFamilia}]]*/'noValue';
+         var sub_familia_data = /*[[${chartDataSubFamilia}]]*/'noValue';
+
+        $(document).ready(function() {
+            google.charts.load('current', {
+                packages : [ 'corechart', 'bar' ]
+            });
+            google.charts.setOnLoadCallback(drawColumnChartFam);
+            google.charts.setOnLoadCallback(drawColumnChartSubFam);
+        });
+
+        function drawColumnChartFam() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Familia');
+            data.addColumn('number', 'DiasAlquilados');
+            Object.keys(familia_data).forEach(function(key) {
+                data.addRow([ key, familia_data[key] ]);
+            });
+            var options = {
+                title : 'Promedio dias alquilados - Familia',
+                hAxis : {
+                    title : 'Familias',
+                },
+                vAxis : {
+                    title : 'Dias'
+                }
+            };
+            var chart = new google.visualization.ColumnChart(document
+                    .getElementById('familia_chart'));
+            chart.draw(data, options);
+        }
+
+        function drawColumnChartSubFam() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'SubFamilia');
+            data.addColumn('number', 'DiasAlquilados');
+            Object.keys(sub_familia_data).forEach(function(key) {
+                data.addRow([ key, sub_familia_data[key] ]);
+            });
+            var options = {
+                title : 'Promedio dias alquilados - Sub-Familia',
+                hAxis : {
+                    title : 'Sub-Familias',
+                },
+                vAxis : {
+                    title : 'Dias'
+                }
+            };
+            var chart = new google.visualization.ColumnChart(document
+                    .getElementById('sub_familia_chart'));
+            chart.draw(data, options);
+        }
+
+    </script>
+
+</body>
+</html>

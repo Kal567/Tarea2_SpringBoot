@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>PUCMyMarket</title>
+</head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{|/productos/${usuario}/disponibles|}">PUCMyMarket</a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{|/productos/${usuario}/disponibles|}">Productos<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{|/alquileres/${usuario}/alquileresList|}">Mis Alquiles</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{|/usuario/${usuario}/misFacturas|}">Mis Facturas</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Admin
+            </a>
+            <div th:if="${usuario != null}" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" th:href="@{|/manageusuarios/${usuario}/all|}">Usuarios</a>
+                <a class="dropdown-item" th:href="@{|/managefam/${usuario}/showAllFamilias|}">Familias</a>
+                <a class="dropdown-item" th:href="@{|/managefam/${usuario}/showAllSubFamilias|}">Sub-Familias</a>
+            </div>
+        </li>
+    </ul>
+    <button class="btn btn-outline-info my-2 my-sm-0"><a class="dropdown-item" th:href="@{|/manageusuarios/logout|}">Sign Out</a></button>
+</nav>
+
+<section id="tabs" class="project-tab">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Alquiles Pendientes</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Todos los alquilers</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <table class="table" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <!-- Material unchecked -->
+                                    <div class="form-check">
+                                        <label type="checkbox" class="form-check-input" id="tableMaterialCheck1" th:name="tableMaterialCheck1" disabled></label>
+                                        <label class="form-check-label" for="tableMaterialCheck1">#</label>
+                                    </div>
+                                </th>
+                                <th>ID Producto</th>
+                                <th>Nombre Producto</th>
+                                <th>Fecha Alquiler</th>
+                                <th>Precio Alquiler</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="alquilerPendientes : ${getAllAlquileresPendientes}">
+                                <th scope="row">
+                                    <!-- Material unchecked -->
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="tableMaterialCheck2"></label>
+                                        <input type="checkbox" class="form-check-input" id="tableMaterialCheck2" th:name="tableMaterialCheck2" th:text="${alquilerPendientes.idAlquiler}">
+
+                                    </div>
+                                </th>
+                                <!-- <th th:text="${alquilerPendientes.idAlquiler}"></th> -->
+                                <th th:text="${alquilerPendientes.idProductoAlquiler}"></th>
+                                <td th:text="${alquilerPendientes.nombreProductoAlquiler}"></td>
+                                <td th:text="${alquilerPendientes.fechaAlquiler}"></td>
+                                <td th:text="${alquilerPendientes.precioPorDias}"></td>
+                                <td><button type="submit" class="btn btn-outline-success"><a class="nav-link" th:href="@{|/usuario/${usuario}/entregarProductos/${alquilerPendientes.idAlquiler}|}">Facturar</a></button></td>
+                                <td><button type="button" class="btn btn-outline-danger"><a class="nav-link" th:href="@{|/alquileres/${usuario}/deletealquileres/${alquilerPendientes.idAlquiler}|}">Cancelar</a></button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <table class="table" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>ID Producto</th>
+                                <th>Nombre Producto</th>
+                                <th>Fecha Alquiler</th>
+                                <th>Precio Alquiler</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="alquiler : ${getAllAlquileres}">
+                                <th th:text="${alquiler.idAlquiler}"></th>
+                                <th th:text="${alquiler.idProductoAlquiler}"></th>
+                                <td th:text="${alquiler.nombreProductoAlquiler}"></td>
+                                <td th:text="${alquiler.fechaAlquiler}"></td>
+                                <td th:text="${alquiler.fechaEntregaEstablecida}"></td>
+                                <td th:text="${alquiler.precioPorDias}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+</body>
+</html>
